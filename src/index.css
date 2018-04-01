@@ -1,5 +1,53 @@
 body {
+  background: #ccc;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+  font-size: 40pt;
+  font-family: 'Open Sans', sans-serif;
+}
+
+label {
+  margin-right: 20px;
+}
+
+input {
+  height: 35px;
+  border-radius: 0px;
+}
+
+button {
+  color: #ffffff;
+  font-size: 20px;
+  background: #3498db;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+
+}
+
+button:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
+
+.Button:first-of-type {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+button:disabled{
+  color: #ccc;
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.Success {
+    color: #5C9210;
+}
+
+.Danger {
+    color: #944317;
 }
