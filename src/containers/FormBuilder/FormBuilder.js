@@ -14,7 +14,11 @@ class Builder extends Component{
       nameValid: false,
       emailValid: false,
       phoneValid: false,
-      allValid: false
+      nameTouched: false,
+      emailTouched: false,
+      phoneTouched: false,
+      allValid: false,
+      showOutput: false
     };
   }
 
@@ -27,46 +31,71 @@ handleNameInputChange = (event) => {
 
   let value = event.target.value;
   this.setState({name: value});
+  if(!this.state.nameTouched){
+    this.setState({nameTouched: true})
+  }
 
   let nameValid = !value.includes('.') && value.trim() !== '';
   console.log('name valid: ', nameValid);
-  this.setState({nameValid: nameValid});
+  this.setState({nameValid: nameValid}, ()=>{
+    this.setState({allValid: this.state.nameValid && this.state.emailValid && this.state.phoneValid});
+  });
 
-  this.setState({allValid: this.state.nameValid && this.state.emailValid && this.state.phoneValid});
+  //this.setState({allValid: this.state.nameValid && this.state.emailValid && this.state.phoneValid});
 }
 
 handleEmailInputChange = (event) => {
   let value = event.target.value;
   this.setState({email: value});
+  if(!this.state.emailTouched){
+    this.setState({emailTouched: true})
+  }
 
   let re = /\S+@\S+\.\S+/;
   let emailValid =  re.test(value);
   console.log('emailValid: ', emailValid );
-  this.setState({emailValid: emailValid});
+  this.setState({emailValid: emailValid}, ()=>{
+    this.setState({allValid: this.state.nameValid && this.state.emailValid && this.state.phoneValid});
+  });
 
-  this.setState({allValid: this.state.nameValid && this.state.emailValid && this.state.phoneValid});
+  //this.setState({allValid: this.state.nameValid && this.state.emailValid && this.state.phoneValid});
 }
 
 handlePhoneInputChange = (event) => {
   let value = event.target.value;
   this.setState({phone: value});
+  if(!this.state.phoneTouched){
+    this.setState({phoneTouched: true})
+  }
 
   console.log('length: ', value.length);
   let phoneValid = value.length === 11;
   console.log('phone valid', phoneValid);
-  this.setState({phoneValid: phoneValid});
+  this.setState({phoneValid: phoneValid}, ()=>{
+    this.setState({allValid: this.state.nameValid && this.state.emailValid && this.state.phoneValid});
+  });
 
-  this.setState({allValid: this.state.nameValid && this.state.emailValid && this.state.phoneValid});
+
 
 }
 
   render(){
     console.log(this.state.allValid);
     let output = (
-      <Output
-        name={this.state.name}
-        email={this.state.email}
-        phone={this.state.phone}/>
+      <div style={{display: "block"}}>
+        <div className="row">
+          <p>Name:</p>
+          {this.state.name}
+        </div>
+        <div className="row">
+          <p>Email:</p>
+          {this.state.email}
+        </div>
+        <div className="row">
+          <p>Phone:</p>
+          {this.state.phone}
+        </div>
+      </div>
     )
     return(
       <Aux>
@@ -77,7 +106,7 @@ handlePhoneInputChange = (event) => {
             <div>
               <label>Name</label>
               <input
-                className={this.state.nameValid ? null : "input-warning"}
+                className={this.state.nameValid==false && this.state.nameTouched==true ? "input-warning" : null}
                 type="text"
                 onChange={this.handleNameInputChange}
                 placeholder="Enter your full name"/>
@@ -86,7 +115,7 @@ handlePhoneInputChange = (event) => {
             <div>
               <label>Email</label>
               <input
-                className={this.state.emailValid ? null : "input-warning"}
+                className={this.state.emailValid==false && this.state.emailTouched==true ? "input-warning" : null}
                 type="email"
                 onChange={(event) => this.handleEmailInputChange(event)}
                 placeholder="Enter valid email"/>
@@ -95,7 +124,7 @@ handlePhoneInputChange = (event) => {
             <div>
               <label>Phone</label>
               <input
-                className={this.state.phoneValid ? null : "input-warning"}
+                className={this.state.phoneValid==false && this.state.phoneTouched==true ? "input-warning" : null}
                 type="text"
                 onChange={this.handlePhoneInputChange}
                 placeholder="Enter an 11 digit number"/>

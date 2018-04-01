@@ -9,5 +9,13 @@
 }
 
 .input-warning {
-  border: 1px solid red;
+  border: 1px solid #e65100;
+  background-color: #ffe0b2;
+}
+
+.row {
+  display: flex;
+  align-content: space-between;
+  text-align:center;
+  align-items: flex-end;
 }
